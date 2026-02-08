@@ -7,8 +7,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root { 
-            --bg: #030712; 
-            --panel: rgba(17, 24, 39, 0.95); 
+            --bg: #020617; 
+            --panel: rgba(15, 23, 42, 0.95); 
             --accent: #6366f1; 
             --mentor: #10b981;
             --brutal: #ef4444;
@@ -18,95 +18,84 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); height: 100vh; display: flex; overflow: hidden; }
 
-        /* CINEMATIC AURORA */
-        .aurora { position: fixed; inset: 0; z-index: -1; background: radial-gradient(at 0% 0%, rgba(99,102,241,0.15) 0, transparent 50%), radial-gradient(at 100% 100%, rgba(236,72,153,0.15) 0, transparent 50%); background-image: radial-gradient(at 50% 50%, rgba(255,255,255,0.02) 0, transparent 50%); animation: pulse 8s infinite; }
-        @keyframes pulse { 0% { opacity: 0.8; } 50% { opacity: 1; } 100% { opacity: 0.8; } }
+        /* CINEMATIC AURORA - ELEGANT & DARK */
+        .aurora { position: fixed; inset: 0; z-index: -1; background: radial-gradient(at 0% 0%, rgba(99,102,241,0.1) 0, transparent 60%), radial-gradient(at 100% 100%, rgba(236,72,153,0.1) 0, transparent 60%); background-image: radial-gradient(at 50% 50%, rgba(255,255,255,0.01) 0, transparent 50%); animation: pulse 10s infinite; }
+        @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
 
-        /* LOADING SCREEN */
-        #loader { position: fixed; inset: 0; background: #020617; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: 0.8s ease-out; }
-        .loader-bar { width: 200px; height: 2px; background: rgba(255,255,255,0.1); margin-top: 20px; position: relative; overflow: hidden; }
-        .loader-fill { position: absolute; top: 0; left: 0; height: 100%; width: 0%; background: var(--accent); transition: 2s ease-in-out; }
-        .loader-text { font-size: 12px; font-weight: 800; letter-spacing: 4px; color: var(--accent); margin-bottom: 10px; }
-
-        /* VISION OVERLAY */
-        #vision-overlay { position: fixed; inset: 0; background: rgba(2, 6, 23, 0.98); z-index: 2000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
-        .vision-card { width: 900px; background: #0f172a; border: 1px solid rgba(255,255,255,0.1); border-radius: 30px; padding: 50px; position: relative; box-shadow: 0 0 100px rgba(0,0,0,0.8); }
-        .v-header { font-size: 48px; font-weight: 900; background: var(--rainbow); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 20px; }
-        .v-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 30px; }
-        .v-item h3 { color: white; margin-bottom: 10px; font-size: 18px; }
-        .v-item p { color: #94a3b8; font-size: 14px; line-height: 1.6; }
+        /* VISION OVERLAY - THE MANIFESTO */
+        #vision-overlay { position: fixed; inset: 0; background: #020617; z-index: 2000; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 5vw; text-align: center; transition: opacity 0.5s; }
+        .v-content { max-width: 900px; animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .v-header { font-size: 72px; font-weight: 900; background: var(--rainbow); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 24px; letter-spacing: -2px; }
+        .v-sub { font-size: 24px; color: white; font-weight: 700; margin-bottom: 30px; }
+        .v-desc { font-size: 18px; line-height: 1.7; color: #94a3b8; margin-bottom: 50px; text-align: center; }
+        .v-tag { background: rgba(255,255,255,0.05); padding: 5px 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1); font-size: 12px; font-weight: 700; margin: 0 5px; color: #cbd5e1; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
 
         /* SIDEBAR */
-        .sidebar { width: 300px; background: var(--panel); border-right: 1px solid rgba(255,255,255,0.05); padding: 30px 20px; display: flex; flex-direction: column; backdrop-filter: blur(20px); }
-        .logo { font-size: 26px; font-weight: 900; margin-bottom: 40px; color: white; letter-spacing: -1px; display: flex; align-items: center; gap: 10px; }
+        .sidebar { width: 320px; background: var(--panel); border-right: 1px solid rgba(255,255,255,0.05); padding: 40px 25px; display: flex; flex-direction: column; backdrop-filter: blur(20px); }
+        .logo { font-size: 28px; font-weight: 900; margin-bottom: 50px; color: white; letter-spacing: -1px; display: flex; align-items: center; gap: 10px; }
         .logo span { background: var(--rainbow); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
-        .nav-cat { font-size: 10px; font-weight: 800; color: #475569; text-transform: uppercase; letter-spacing: 1px; margin: 20px 0 10px 10px; }
-        .nav-btn { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid transparent; background: transparent; color: #94a3b8; text-align: left; font-weight: 700; cursor: pointer; margin-bottom: 4px; display: flex; align-items: center; gap: 12px; transition: 0.2s; }
+        .nav-cat { font-size: 10px; font-weight: 800; color: #475569; text-transform: uppercase; letter-spacing: 1px; margin: 25px 0 10px 10px; }
+        .nav-btn { width: 100%; padding: 16px; border-radius: 14px; border: 1px solid transparent; background: transparent; color: #94a3b8; text-align: left; font-weight: 700; cursor: pointer; margin-bottom: 4px; display: flex; align-items: center; gap: 12px; transition: 0.2s; }
         .nav-btn:hover { background: rgba(255,255,255,0.03); color: white; }
-        .nav-btn.active { background: rgba(99, 102, 241, 0.1); color: white; border-color: var(--accent); }
+        .nav-btn.active { background: rgba(99, 102, 241, 0.08); color: white; border-color: rgba(99, 102, 241, 0.3); }
 
         /* WORKSPACE */
-        .workspace { flex: 1; display: flex; flex-direction: column; padding: 40px; position: relative; }
+        .workspace { flex: 1; display: flex; flex-direction: column; padding: 50px; position: relative; }
         
         /* DUAL MODE SWITCH */
-        .mode-switch { background: rgba(255,255,255,0.03); border-radius: 100px; padding: 5px; display: flex; width: fit-content; margin-bottom: 30px; border: 1px solid rgba(255,255,255,0.1); }
-        .mode-btn { padding: 10px 25px; border-radius: 100px; border: none; background: transparent; color: #94a3b8; font-weight: 800; cursor: pointer; transition: 0.3s; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
-        .mode-btn.active-brutal { background: var(--brutal); color: white; box-shadow: 0 0 20px rgba(239,68,68,0.4); }
-        .mode-btn.active-mentor { background: var(--mentor); color: white; box-shadow: 0 0 20px rgba(16,185,129,0.4); }
+        .mode-container { display: flex; gap: 15px; margin-bottom: 30px; }
+        .mode-card { flex: 1; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 15px 20px; border-radius: 16px; cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 15px; opacity: 0.6; }
+        .mode-card:hover { opacity: 0.8; }
+        .mode-card.active { opacity: 1; border-color: currentColor; background: rgba(255,255,255,0.05); }
+        .mc-icon { font-size: 24px; }
+        .mc-info h3 { font-size: 14px; font-weight: 800; margin-bottom: 4px; }
+        .mc-info p { font-size: 11px; color: #94a3b8; }
 
         /* TOOLBARS */
-        .toolbar { display: none; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+        .toolbar { display: none; gap: 15px; margin-bottom: 25px; flex-wrap: wrap; }
         .toolbar.active { display: flex; }
-        input, select { background: #0f172a; border: 1px solid rgba(255,255,255,0.1); padding: 14px; border-radius: 12px; color: white; font-weight: 700; outline: none; font-size: 13px; flex: 1; min-width: 140px; }
-        
-        textarea { flex: 1; background: transparent; border: none; outline: none; color: white; font-size: 20px; font-weight: 500; line-height: 1.6; resize: none; margin-bottom: 20px; }
+        input, select { background: #0f172a; border: 1px solid rgba(255,255,255,0.1); padding: 16px; border-radius: 12px; color: white; font-weight: 600; outline: none; font-size: 13px; flex: 1; min-width: 140px; transition: 0.2s; }
+        input:focus, select:focus { border-color: var(--accent); }
+
+        textarea { flex: 1; background: transparent; border: none; outline: none; color: white; font-size: 22px; font-weight: 500; line-height: 1.6; resize: none; margin-bottom: 20px; }
         
         /* ANALYTICS */
-        .analytics { width: 440px; background: rgba(0,0,0,0.6); border-left: 1px solid rgba(255,255,255,0.1); padding: 40px; overflow-y: auto; display: flex; flex-direction: column; }
-        .grade-box { text-align: center; margin-bottom: 30px; }
-        .grade { font-size: 100px; font-weight: 900; line-height: 1; margin-bottom: 5px; background: var(--rainbow); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .analytics { width: 460px; background: rgba(0,0,0,0.4); border-left: 1px solid rgba(255,255,255,0.05); padding: 50px; overflow-y: auto; display: flex; flex-direction: column; }
+        .grade-box { text-align: center; margin-bottom: 40px; position: relative; }
+        .grade { font-size: 120px; font-weight: 900; line-height: 1; margin-bottom: 10px; color: #334155; transition: 0.3s; }
+        .grade-sub { font-size: 12px; font-weight: 800; color: #64748b; letter-spacing: 2px; text-transform: uppercase; }
         
-        .result-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 25px; border-radius: 20px; margin-bottom: 15px; }
-        .rc-label { font-size: 10px; font-weight: 900; text-transform: uppercase; color: #64748b; margin-bottom: 10px; display: block; letter-spacing: 1px; }
+        .result-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 30px; border-radius: 24px; margin-bottom: 20px; }
+        .rc-label { font-size: 10px; font-weight: 900; text-transform: uppercase; color: #64748b; margin-bottom: 15px; display: block; letter-spacing: 2px; }
         
-        .btn-action { width: 100%; padding: 20px; border-radius: 16px; background: var(--accent); color: white; border: none; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: 0.2s; font-size: 14px; }
-        .btn-action:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(99,102,241,0.3); }
+        .btn-action { width: 100%; padding: 22px; border-radius: 18px; background: var(--accent); color: white; border: none; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: 0.2s; font-size: 14px; box-shadow: 0 10px 40px rgba(99,102,241,0.25); }
+        .btn-action:hover { transform: translateY(-2px); box-shadow: 0 15px 50px rgba(99,102,241,0.4); }
 
         /* VOICE */
-        #voice-panel { display: none; gap: 15px; margin-bottom: 20px; }
-        .v-stat { background: rgba(255,255,255,0.03); padding: 15px; border-radius: 12px; flex: 1; text-align: center; }
-        .v-val { font-size: 20px; font-weight: 900; color: white; }
-
-        /* HISTORY */
-        .hist-item { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 11px; color: #94a3b8; display: flex; justify-content: space-between; }
-        .hist-grade { font-weight: 900; color: white; }
+        #voice-panel { display: none; gap: 15px; margin-bottom: 25px; background: rgba(255,255,255,0.02); padding: 20px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); }
+        .v-stat { flex: 1; text-align: center; }
+        .v-val { font-size: 24px; font-weight: 900; color: white; }
     </style>
 </head>
 <body>
     <div class="aurora"></div>
 
-    <div id="loader">
-        <div class="loader-text">INITIALIZING VELIX CORE</div>
-        <div class="loader-bar"><div class="loader-fill" id="l-fill"></div></div>
-    </div>
-
     <div id="vision-overlay">
-        <div class="vision-card">
+        <div class="v-content">
             <h1 class="v-header">VELIX SOVEREIGN</h1>
-            <p style="font-size: 18px; color: #cbd5e1; margin-bottom: 30px;">The definitive A.I. audit engine. Choose your path: <b>Brutal Truth</b> for relentless critique, or <b>Mentor</b> for strategic growth.</p>
-            
-            <div class="v-grid">
-                <div class="v-item">
-                    <h3>⚔️ Brutal Truth</h3>
-                    <p>Zero empathy. Logic flaws are destroyed. Grades are strict. Best for stress-testing ideas.</p>
-                </div>
-                <div class="v-item">
-                    <h3>🌿 Mentor Mode</h3>
-                    <p>Constructive analysis. Focuses on potential and actionable steps. Best for improvement.</p>
-                </div>
-            </div>
-            <button class="btn-action" style="margin-top: 40px;" onclick="closeVision()">ENTER COMMAND</button>
+            <p class="v-sub">The Antidote to Mediocrity.</p>
+            <p class="v-desc">
+                Most AI tools are designed to be polite "Yes-Men." They sugarcoat your mistakes and stunt your growth.<br>
+                <b>VELIX is different.</b> It is a Dual-Core Audit Engine designed to ruthlessly dismantle weak logic<br>
+                or strategically mentor you toward excellence.<br><br>
+                <span class="v-tag">LOGIC AUDIT</span>
+                <span class="v-tag">TONE MAPPING</span>
+                <span class="v-tag">RISK ARCHITECTURE</span>
+                <span class="v-tag">AESTHETIC MATH</span>
+            </p>
+            <button class="btn-action" style="max-width: 300px; margin: 0 auto;" onclick="closeVision()">ENTER COMMAND CENTER</button>
         </div>
     </div>
 
@@ -122,69 +111,84 @@
         <button class="nav-btn" id="nav-art" onclick="setTab('art')">🎨 Art Audit</button>
         <button class="nav-btn" id="nav-arc" onclick="setTab('arc')">🚀 Architect</button>
 
-        <div style="margin-top: auto; background: rgba(0,0,0,0.2); padding: 20px; border-radius: 16px;">
-            <div class="nav-cat" style="margin-top:0">Session History</div>
-            <div id="history-log" style="max-height: 150px; overflow-y: auto;"></div>
+        <div style="margin-top: auto; background: rgba(0,0,0,0.3); padding: 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05);">
+            <div class="nav-cat" style="margin-top:0">Session Log</div>
+            <div id="history-log" style="max-height: 150px; overflow-y: auto; font-size: 11px; color: #64748b; display: flex; flex-direction: column; gap: 8px;"></div>
         </div>
     </aside>
 
     <main class="workspace">
-        <div class="mode-switch">
-            <button class="mode-btn active-brutal" id="m-brutal" onclick="setMode('brutal')">⚔️ Brutal Truth</button>
-            <button class="mode-btn" id="m-mentor" onclick="setMode('mentor')">🌿 Mentor</button>
+        <div class="mode-container">
+            <div class="mode-card active" id="card-brutal" onclick="setMode('brutal')" style="color: var(--brutal)">
+                <div class="mc-icon">⚔️</div>
+                <div class="mc-info">
+                    <h3>TOUGH COACH</h3>
+                    <p>Brutal honesty. Logic dismantling. No fluff.</p>
+                </div>
+            </div>
+            <div class="mode-card" id="card-mentor" onclick="setMode('mentor')" style="color: var(--mentor)">
+                <div class="mc-icon">🌿</div>
+                <div class="mc-info">
+                    <h3>MENTOR MODE</h3>
+                    <p>Strategic guidance. Constructive growth.</p>
+                </div>
+            </div>
         </div>
 
         <div id="tool-gen" class="toolbar active">
-            <input id="g-topic" placeholder="Topic / Niche">
-            <input id="g-tone" placeholder="Tone (e.g. Viral)">
-            <select id="g-format"><option>LinkedIn Post</option><option>Twitter Thread</option><option>Blog Intro</option></select>
+            <input id="g-topic" placeholder="The Objective">
+            <input id="g-tone" placeholder="Desired Tone">
+            <select id="g-format"><option>LinkedIn Post</option><option>Twitter Thread</option><option>Essay Intro</option><option>Cold Email</option></select>
             <input id="g-hook" placeholder="Viral Hook (Optional)">
         </div>
 
         <div id="tool-text" class="toolbar">
             <select id="t-focus"><option>Logic & Flow</option><option>Grammar & Syntax</option><option>Persuasion</option></select>
             <input id="t-aud" placeholder="Target Audience">
-            <input id="t-read" type="number" placeholder="Grade Level (1-12)" style="max-width: 120px;">
+            <select id="t-clarity"><option>5th Grade (Simple)</option><option>University (Complex)</option></select>
+            <input id="t-key" placeholder="Keyword Requirement">
         </div>
 
         <div id="voice-panel">
             <div class="v-stat"><div class="v-val" id="wpm">0</div><div style="font-size:10px; color:#94a3b8">WPM</div></div>
-            <div class="v-stat"><div class="v-val" id="dur">00:00</div><div style="font-size:10px; color:#94a3b8">TIME</div></div>
-            <button onclick="toggleRec()" style="flex:2; background:#ef4444; border:none; color:white; border-radius:12px; font-weight:800; cursor:pointer;">🔴 REC / STOP</button>
+            <div class="v-stat"><div class="v-val" id="dur">00:00</div><div style="font-size:10px; color:#94a3b8">DURATION</div></div>
+            <button onclick="toggleRec()" style="flex:2; background:#ef4444; border:none; color:white; border-radius:12px; font-weight:800; cursor:pointer; font-size: 12px; letter-spacing: 1px;">🔴 REC / STOP</button>
         </div>
 
         <div id="tool-art" class="toolbar">
-            <input id="a-style" placeholder="Style (e.g. Bauhaus)">
-            <select id="a-comp"><option>Rule of Thirds</option><option>Golden Ratio</option><option>Symmetry</option></select>
-            <input id="a-color" placeholder="Palette (e.g. Neon)">
+            <input id="a-style" placeholder="Style (e.g. Bauhaus, Noir)">
+            <select id="a-comp"><option>Rule of Thirds</option><option>Golden Ratio</option><option>Center Focus</option></select>
+            <input id="a-color" placeholder="Palette (e.g. Neon, Pastel)">
+            <input id="a-neg" placeholder="Negative Prompt (Avoid)">
         </div>
 
         <div id="tool-arc" class="toolbar">
-            <input id="arc-goal" placeholder="Project Goal">
-            <select id="arc-res"><option>Low Budget</option><option>Unlimited</option></select>
-            <input id="arc-risk" type="range" min="1" max="10" title="Risk Level">
+            <input id="arc-goal" placeholder="The Final Goal">
+            <select id="arc-res"><option>Bootstrap (Low Cost)</option><option>Venture (Unlimited)</option></select>
+            <input id="arc-risk" placeholder="Risk Tolerance (1-10)">
+            <input id="arc-time" placeholder="Timeline (e.g. 3 Months)">
         </div>
 
-        <textarea id="main-input" placeholder="Awaiting raw data..."></textarea>
+        <textarea id="main-input" placeholder="Awaiting raw data for sovereign processing..."></textarea>
         
-        <button class="btn-action" onclick="ignite()" id="action-btn">INITIATE ANALYSIS</button>
+        <button class="btn-action" onclick="ignite()" id="action-btn">INITIATE AUDIT</button>
     </main>
 
     <aside class="analytics">
         <div class="grade-box">
-            <div class="rc-label">SOVEREIGN GRADE</div>
             <div class="grade" id="grade">--</div>
+            <div class="grade-sub" id="grade-sub">ADD DATA TO RANK</div>
         </div>
 
         <div class="result-card" id="card-feedback" style="border-left: 4px solid #ef4444;">
-            <span class="rc-label" id="lbl-feedback">THE KILLSHOT</span>
-            <p id="txt-feedback" style="font-size: 18px; font-weight: 700; color: white;">Awaiting audit.</p>
+            <span class="rc-label" id="lbl-feedback" style="color: #ef4444;">THE REALITY CHECK</span>
+            <p id="txt-feedback" style="font-size: 18px; font-weight: 700; color: white; line-height: 1.4;">Waiting for input...</p>
         </div>
 
         <div class="result-card">
-            <span class="rc-label">AI ENHANCED VERSION</span>
-            <p id="txt-enhance" style="font-size: 14px; color: #cbd5e1; line-height: 1.6;">No data.</p>
-            <button onclick="playAudio()" style="margin-top:15px; background:rgba(255,255,255,0.1); border:none; color:white; padding:10px; width:100%; border-radius:10px; font-weight:700; cursor:pointer;">🔊 PLAY AUDIO</button>
+            <span class="rc-label">SOVEREIGN VERSION</span>
+            <p id="txt-enhance" style="font-size: 14px; color: #cbd5e1; line-height: 1.7; margin-bottom: 20px;">No data analyzed.</p>
+            <button onclick="playAudio()" style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:white; padding:12px; width:100%; border-radius:12px; font-weight:700; cursor:pointer; font-size: 11px;">🔊 PLAY AUDIO</button>
         </div>
     </aside>
 
@@ -193,19 +197,10 @@
         let state = { tab: 'gen', mode: 'brutal' };
         let recognition, timer, startTime;
 
-        // LOAD SEQUENCE
-        window.onload = () => {
-            document.getElementById('l-fill').style.width = '100%';
-            setTimeout(() => {
-                document.getElementById('loader').style.opacity = '0';
-                setTimeout(() => {
-                    document.getElementById('loader').style.display = 'none';
-                    document.getElementById('vision-overlay').style.display = 'flex';
-                }, 800);
-            }, 1500);
-        };
-
-        function closeVision() { document.getElementById('vision-overlay').style.display = 'none'; }
+        function closeVision() { 
+            document.getElementById('vision-overlay').style.opacity = '0';
+            setTimeout(() => document.getElementById('vision-overlay').style.display = 'none', 500);
+        }
 
         function setTab(t) {
             state.tab = t;
@@ -217,17 +212,20 @@
 
         function setMode(m) {
             state.mode = m;
-            document.getElementById('m-brutal').className = `mode-btn ${m==='brutal'?'active-brutal':''}`;
-            document.getElementById('m-mentor').className = `mode-btn ${m==='mentor'?'active-mentor':''}`;
+            document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('active'));
+            document.getElementById(`card-${m}`).classList.add('active');
             
-            // UI Update based on mode
             const color = m === 'brutal' ? '#ef4444' : '#10b981';
+            const label = m === 'brutal' ? "THE REALITY CHECK" : "GROWTH STRATEGY";
+            
             document.getElementById('card-feedback').style.borderLeftColor = color;
-            document.getElementById('lbl-feedback').innerText = m === 'brutal' ? "THE KILLSHOT" : "GROWTH PATH";
+            document.getElementById('lbl-feedback').innerText = label;
             document.getElementById('lbl-feedback').style.color = color;
+            document.getElementById('action-btn').style.background = m === 'brutal' ? '#ef4444' : '#10b981';
+            document.getElementById('action-btn').innerText = m === 'brutal' ? "DISMANTLE WEAKNESS" : "ELEVATE POTENTIAL";
         }
 
-        // VOICE LOGIC
+        // VOICE ENGINE
         function toggleRec() {
             if(!recognition) {
                 recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
@@ -258,14 +256,25 @@
         async function ignite() {
             const btn = document.getElementById('action-btn');
             const input = document.getElementById('main-input').value;
-            if(!input) return;
+            
+            if(!input || input.length < 5) {
+                document.getElementById('grade').innerText = "--";
+                document.getElementById('grade-sub').innerText = "ADD MORE DATA";
+                return;
+            }
 
-            btn.innerText = state.mode === 'brutal' ? "DESTROYING WEAKNESS..." : "ANALYZING POTENTIAL...";
-            btn.style.background = state.mode === 'brutal' ? "#ef4444" : "#10b981";
+            btn.innerText = "PROCESSING...";
+            
+            // THE TOUGH COACH PROMPT
+            const coachPrompt = `You are VELIX. Mode: TOUGH COACH. 
+            Do NOT act like a yes-man. Do NOT sugarcoat. 
+            Challenge opinions. Call out logic flaws. Be direct, raw, and evidence-backed. 
+            Think like a brutally honest friend who cares about improvement, not comfort. 
+            JSON ONLY: {"grade": "S/A/B/C/D/F", "feedback": "Direct, actionable critique (max 2 sentences)", "enhance": "Rewrite the user's input to be elite."}`;
 
-            const prompt = state.mode === 'brutal' 
-                ? "You are VELIX. Be aggressive, mean, and strictly logical. Roast the user. JSON ONLY: {\"grade\": \"S-F\", \"feedback\": \"1 sentence roast\", \"enhance\": \"Superior version\"}"
-                : "You are VELIX MENTOR. Be constructive, helpful, and kind. Focus on growth. JSON ONLY: {\"grade\": \"S-F\", \"feedback\": \"1 sentence advice\", \"enhance\": \"Improved version\"}";
+            const mentorPrompt = `You are VELIX. Mode: MENTOR. 
+            Be constructive, encouraging, and strategic. Focus on potential. 
+            JSON ONLY: {"grade": "S/A/B/C/D/F", "feedback": "Helpful advice (max 2 sentences)", "enhance": "Improved version."}`;
 
             try {
                 const r = await fetch("https://openrouter.ai/api/v1/chat/completions", {
@@ -273,7 +282,10 @@
                     headers: {'Authorization': `Bearer ${KEY}`, 'Content-Type': 'application/json'},
                     body: JSON.stringify({
                         model: "google/gemini-2.0-flash-001",
-                        messages: [{role: "system", content: prompt}, {role: "user", content: input}],
+                        messages: [
+                            {role: "system", content: state.mode === 'brutal' ? coachPrompt : mentorPrompt}, 
+                            {role: "user", content: input}
+                        ],
                         response_format: { type: "json_object" }
                     })
                 });
@@ -281,17 +293,19 @@
                 const res = JSON.parse(d.choices[0].message.content);
 
                 document.getElementById('grade').innerText = res.grade;
+                document.getElementById('grade').style.color = state.mode === 'brutal' ? '#ef4444' : '#10b981';
+                document.getElementById('grade-sub').innerText = "SOVEREIGN RANK";
                 document.getElementById('txt-feedback').innerText = res.feedback;
                 document.getElementById('txt-enhance').innerText = res.enhance;
 
+                // Log History
                 const logItem = document.createElement('div');
-                logItem.className = 'hist-item';
-                logItem.innerHTML = `<span>${new Date().toLocaleTimeString()}</span><span class="hist-grade" style="color:${state.mode==='brutal'?'#ef4444':'#10b981'}">${res.grade}</span>`;
+                logItem.innerHTML = `<span style="color:${state.mode==='brutal'?'#ef4444':'#10b981'}">●</span> ${new Date().toLocaleTimeString()} - Rank ${res.grade}`;
                 document.getElementById('history-log').prepend(logItem);
 
             } catch(e) { console.error(e); }
-            btn.innerText = "INITIATE ANALYSIS";
-            btn.style.background = "#6366f1";
+            
+            btn.innerText = state.mode === 'brutal' ? "DISMANTLE WEAKNESS" : "ELEVATE POTENTIAL";
         }
 
         function playAudio() {
