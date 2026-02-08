@@ -18,11 +18,11 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); height: 100vh; display: flex; overflow: hidden; }
 
-        /* CINEMATIC AURORA - ELEGANT & DARK */
+        /* CINEMATIC AURORA */
         .aurora { position: fixed; inset: 0; z-index: -1; background: radial-gradient(at 0% 0%, rgba(99,102,241,0.1) 0, transparent 60%), radial-gradient(at 100% 100%, rgba(236,72,153,0.1) 0, transparent 60%); background-image: radial-gradient(at 50% 50%, rgba(255,255,255,0.01) 0, transparent 50%); animation: pulse 10s infinite; }
         @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
 
-        /* VISION OVERLAY - THE MANIFESTO */
+        /* VISION OVERLAY */
         #vision-overlay { position: fixed; inset: 0; background: #020617; z-index: 2000; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 5vw; text-align: center; transition: opacity 0.5s; }
         .v-content { max-width: 900px; animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
         .v-header { font-size: 72px; font-weight: 900; background: var(--rainbow); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 24px; letter-spacing: -2px; }
@@ -44,7 +44,6 @@
         /* WORKSPACE */
         .workspace { flex: 1; display: flex; flex-direction: column; padding: 50px; position: relative; }
         
-        /* DUAL MODE SWITCH */
         .mode-container { display: flex; gap: 15px; margin-bottom: 30px; }
         .mode-card { flex: 1; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 15px 20px; border-radius: 16px; cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 15px; opacity: 0.6; }
         .mode-card:hover { opacity: 0.8; }
@@ -53,18 +52,16 @@
         .mc-info h3 { font-size: 14px; font-weight: 800; margin-bottom: 4px; }
         .mc-info p { font-size: 11px; color: #94a3b8; }
 
-        /* TOOLBARS */
         .toolbar { display: none; gap: 15px; margin-bottom: 25px; flex-wrap: wrap; }
         .toolbar.active { display: flex; }
-        input, select { background: #0f172a; border: 1px solid rgba(255,255,255,0.1); padding: 16px; border-radius: 12px; color: white; font-weight: 600; outline: none; font-size: 13px; flex: 1; min-width: 140px; transition: 0.2s; }
-        input:focus, select:focus { border-color: var(--accent); }
-
+        input, select { background: #0f172a; border: 1px solid rgba(255,255,255,0.1); padding: 16px; border-radius: 12px; color: white; font-weight: 600; outline: none; font-size: 13px; flex: 1; min-width: 140px; }
+        
         textarea { flex: 1; background: transparent; border: none; outline: none; color: white; font-size: 22px; font-weight: 500; line-height: 1.6; resize: none; margin-bottom: 20px; }
         
         /* ANALYTICS */
         .analytics { width: 460px; background: rgba(0,0,0,0.4); border-left: 1px solid rgba(255,255,255,0.05); padding: 50px; overflow-y: auto; display: flex; flex-direction: column; }
-        .grade-box { text-align: center; margin-bottom: 40px; position: relative; }
-        .grade { font-size: 120px; font-weight: 900; line-height: 1; margin-bottom: 10px; color: #334155; transition: 0.3s; }
+        .grade-box { text-align: center; margin-bottom: 40px; }
+        .grade { font-size: 100px; font-weight: 900; line-height: 1; margin-bottom: 10px; color: #334155; }
         .grade-sub { font-size: 12px; font-weight: 800; color: #64748b; letter-spacing: 2px; text-transform: uppercase; }
         
         .result-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 30px; border-radius: 24px; margin-bottom: 20px; }
@@ -73,7 +70,6 @@
         .btn-action { width: 100%; padding: 22px; border-radius: 18px; background: var(--accent); color: white; border: none; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: 0.2s; font-size: 14px; box-shadow: 0 10px 40px rgba(99,102,241,0.25); }
         .btn-action:hover { transform: translateY(-2px); box-shadow: 0 15px 50px rgba(99,102,241,0.4); }
 
-        /* VOICE */
         #voice-panel { display: none; gap: 15px; margin-bottom: 25px; background: rgba(255,255,255,0.02); padding: 20px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); }
         .v-stat { flex: 1; text-align: center; }
         .v-val { font-size: 24px; font-weight: 900; color: white; }
@@ -87,13 +83,12 @@
             <h1 class="v-header">VELIX SOVEREIGN</h1>
             <p class="v-sub">The Antidote to Mediocrity.</p>
             <p class="v-desc">
-                Most AI tools are designed to be polite "Yes-Men." They sugarcoat your mistakes and stunt your growth.<br>
+                Most AI tools are designed to be polite "Yes-Men." They sugarcoat your mistakes.<br>
                 <b>VELIX is different.</b> It is a Dual-Core Audit Engine designed to ruthlessly dismantle weak logic<br>
                 or strategically mentor you toward excellence.<br><br>
                 <span class="v-tag">LOGIC AUDIT</span>
                 <span class="v-tag">TONE MAPPING</span>
                 <span class="v-tag">RISK ARCHITECTURE</span>
-                <span class="v-tag">AESTHETIC MATH</span>
             </p>
             <button class="btn-action" style="max-width: 300px; margin: 0 auto;" onclick="closeVision()">ENTER COMMAND CENTER</button>
         </div>
@@ -101,16 +96,13 @@
 
     <aside class="sidebar">
         <div class="logo">VELIX <span>APEX</span></div>
-        
         <div class="nav-cat">Creation Engine</div>
         <button class="nav-btn active" id="nav-gen" onclick="setTab('gen')">⚡ Generator</button>
         <button class="nav-btn" id="nav-text" onclick="setTab('text')">📝 Writing Audit</button>
         <button class="nav-btn" id="nav-voice" onclick="setTab('voice')">🎙️ Voice Lab</button>
-        
         <div class="nav-cat">Specialized</div>
         <button class="nav-btn" id="nav-art" onclick="setTab('art')">🎨 Art Audit</button>
         <button class="nav-btn" id="nav-arc" onclick="setTab('arc')">🚀 Architect</button>
-
         <div style="margin-top: auto; background: rgba(0,0,0,0.3); padding: 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05);">
             <div class="nav-cat" style="margin-top:0">Session Log</div>
             <div id="history-log" style="max-height: 150px; overflow-y: auto; font-size: 11px; color: #64748b; display: flex; flex-direction: column; gap: 8px;"></div>
@@ -121,70 +113,50 @@
         <div class="mode-container">
             <div class="mode-card active" id="card-brutal" onclick="setMode('brutal')" style="color: var(--brutal)">
                 <div class="mc-icon">⚔️</div>
-                <div class="mc-info">
-                    <h3>TOUGH COACH</h3>
-                    <p>Brutal honesty. Logic dismantling. No fluff.</p>
-                </div>
+                <div class="mc-info"><h3>TOUGH COACH</h3><p>Brutal honesty. Logic dismantling.</p></div>
             </div>
             <div class="mode-card" id="card-mentor" onclick="setMode('mentor')" style="color: var(--mentor)">
                 <div class="mc-icon">🌿</div>
-                <div class="mc-info">
-                    <h3>MENTOR MODE</h3>
-                    <p>Strategic guidance. Constructive growth.</p>
-                </div>
+                <div class="mc-info"><h3>MENTOR MODE</h3><p>Strategic guidance. Growth focus.</p></div>
             </div>
         </div>
 
         <div id="tool-gen" class="toolbar active">
             <input id="g-topic" placeholder="The Objective">
             <input id="g-tone" placeholder="Desired Tone">
-            <select id="g-format"><option>LinkedIn Post</option><option>Twitter Thread</option><option>Essay Intro</option><option>Cold Email</option></select>
-            <input id="g-hook" placeholder="Viral Hook (Optional)">
+            <select id="g-format"><option>LinkedIn Post</option><option>Twitter Thread</option><option>Cold Email</option></select>
         </div>
-
         <div id="tool-text" class="toolbar">
-            <select id="t-focus"><option>Logic & Flow</option><option>Grammar & Syntax</option><option>Persuasion</option></select>
+            <select id="t-focus"><option>Logic & Flow</option><option>Grammar</option><option>Persuasion</option></select>
             <input id="t-aud" placeholder="Target Audience">
-            <select id="t-clarity"><option>5th Grade (Simple)</option><option>University (Complex)</option></select>
-            <input id="t-key" placeholder="Keyword Requirement">
         </div>
-
         <div id="voice-panel">
             <div class="v-stat"><div class="v-val" id="wpm">0</div><div style="font-size:10px; color:#94a3b8">WPM</div></div>
             <div class="v-stat"><div class="v-val" id="dur">00:00</div><div style="font-size:10px; color:#94a3b8">DURATION</div></div>
-            <button onclick="toggleRec()" style="flex:2; background:#ef4444; border:none; color:white; border-radius:12px; font-weight:800; cursor:pointer; font-size: 12px; letter-spacing: 1px;">🔴 REC / STOP</button>
+            <button onclick="toggleRec()" style="flex:2; background:#ef4444; border:none; color:white; border-radius:12px; font-weight:800; cursor:pointer;">🔴 REC / STOP</button>
         </div>
-
         <div id="tool-art" class="toolbar">
-            <input id="a-style" placeholder="Style (e.g. Bauhaus, Noir)">
-            <select id="a-comp"><option>Rule of Thirds</option><option>Golden Ratio</option><option>Center Focus</option></select>
-            <input id="a-color" placeholder="Palette (e.g. Neon, Pastel)">
-            <input id="a-neg" placeholder="Negative Prompt (Avoid)">
+            <input id="a-style" placeholder="Style (e.g. Bauhaus)">
+            <select id="a-comp"><option>Rule of Thirds</option><option>Golden Ratio</option></select>
         </div>
-
         <div id="tool-arc" class="toolbar">
             <input id="arc-goal" placeholder="The Final Goal">
-            <select id="arc-res"><option>Bootstrap (Low Cost)</option><option>Venture (Unlimited)</option></select>
-            <input id="arc-risk" placeholder="Risk Tolerance (1-10)">
-            <input id="arc-time" placeholder="Timeline (e.g. 3 Months)">
+            <select id="arc-res"><option>Low Budget</option><option>Unlimited</option></select>
         </div>
 
         <textarea id="main-input" placeholder="Awaiting raw data for sovereign processing..."></textarea>
-        
         <button class="btn-action" onclick="ignite()" id="action-btn">INITIATE AUDIT</button>
     </main>
 
     <aside class="analytics">
         <div class="grade-box">
             <div class="grade" id="grade">--</div>
-            <div class="grade-sub" id="grade-sub">ADD DATA TO RANK</div>
+            <div class="grade-sub" id="grade-sub">STATUS: IDLE</div>
         </div>
-
         <div class="result-card" id="card-feedback" style="border-left: 4px solid #ef4444;">
             <span class="rc-label" id="lbl-feedback" style="color: #ef4444;">THE REALITY CHECK</span>
-            <p id="txt-feedback" style="font-size: 18px; font-weight: 700; color: white; line-height: 1.4;">Waiting for input...</p>
+            <p id="txt-feedback" style="font-size: 18px; font-weight: 700; color: white; line-height: 1.4;">Awaiting input...</p>
         </div>
-
         <div class="result-card">
             <span class="rc-label">SOVEREIGN VERSION</span>
             <p id="txt-enhance" style="font-size: 14px; color: #cbd5e1; line-height: 1.7; margin-bottom: 20px;">No data analyzed.</p>
@@ -214,10 +186,8 @@
             state.mode = m;
             document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('active'));
             document.getElementById(`card-${m}`).classList.add('active');
-            
             const color = m === 'brutal' ? '#ef4444' : '#10b981';
             const label = m === 'brutal' ? "THE REALITY CHECK" : "GROWTH STRATEGY";
-            
             document.getElementById('card-feedback').style.borderLeftColor = color;
             document.getElementById('lbl-feedback').innerText = label;
             document.getElementById('lbl-feedback').style.color = color;
@@ -225,7 +195,6 @@
             document.getElementById('action-btn').innerText = m === 'brutal' ? "DISMANTLE WEAKNESS" : "ELEVATE POTENTIAL";
         }
 
-        // VOICE ENGINE
         function toggleRec() {
             if(!recognition) {
                 recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
@@ -256,16 +225,27 @@
         async function ignite() {
             const btn = document.getElementById('action-btn');
             const input = document.getElementById('main-input').value;
+            const gradeDisplay = document.getElementById('grade');
+            const subDisplay = document.getElementById('grade-sub');
             
-            if(!input || input.length < 5) {
-                document.getElementById('grade').innerText = "--";
-                document.getElementById('grade-sub').innerText = "ADD MORE DATA";
+            // STRICT UNDEFINED PREVENTION
+            if(!input || input.trim().length === 0) {
+                gradeDisplay.innerText = "NULL";
+                gradeDisplay.style.color = "#64748b";
+                subDisplay.innerText = "ERROR: ENTER DATA";
+                return;
+            }
+
+            if(input.trim().length < 10) {
+                gradeDisplay.innerText = "LOW";
+                gradeDisplay.style.color = "#ef4444";
+                subDisplay.innerText = "ERROR: INPUT TOO SHORT";
                 return;
             }
 
             btn.innerText = "PROCESSING...";
             
-            // THE TOUGH COACH PROMPT
+            // NEW TOUGH COACH PROMPT (Not a Roast)
             const coachPrompt = `You are VELIX. Mode: TOUGH COACH. 
             Do NOT act like a yes-man. Do NOT sugarcoat. 
             Challenge opinions. Call out logic flaws. Be direct, raw, and evidence-backed. 
@@ -289,21 +269,37 @@
                         response_format: { type: "json_object" }
                     })
                 });
+                
                 const d = await r.json();
+                
+                if (!d.choices || !d.choices[0] || !d.choices[0].message) {
+                    throw new Error("API Failure");
+                }
+
                 const res = JSON.parse(d.choices[0].message.content);
 
-                document.getElementById('grade').innerText = res.grade;
-                document.getElementById('grade').style.color = state.mode === 'brutal' ? '#ef4444' : '#10b981';
-                document.getElementById('grade-sub').innerText = "SOVEREIGN RANK";
-                document.getElementById('txt-feedback').innerText = res.feedback;
-                document.getElementById('txt-enhance').innerText = res.enhance;
+                // Check for valid response
+                if(!res.grade) {
+                    gradeDisplay.innerText = "ERR";
+                    subDisplay.innerText = "AI RESPONSE ERROR";
+                } else {
+                    gradeDisplay.innerText = res.grade;
+                    gradeDisplay.style.color = state.mode === 'brutal' ? '#ef4444' : '#10b981';
+                    subDisplay.innerText = "SOVEREIGN RANK";
+                    document.getElementById('txt-feedback').innerText = res.feedback;
+                    document.getElementById('txt-enhance').innerText = res.enhance;
 
-                // Log History
-                const logItem = document.createElement('div');
-                logItem.innerHTML = `<span style="color:${state.mode==='brutal'?'#ef4444':'#10b981'}">●</span> ${new Date().toLocaleTimeString()} - Rank ${res.grade}`;
-                document.getElementById('history-log').prepend(logItem);
+                    // Log History
+                    const logItem = document.createElement('div');
+                    logItem.innerHTML = `<span style="color:${state.mode==='brutal'?'#ef4444':'#10b981'}">●</span> ${new Date().toLocaleTimeString()} - Rank ${res.grade}`;
+                    document.getElementById('history-log').prepend(logItem);
+                }
 
-            } catch(e) { console.error(e); }
+            } catch(e) { 
+                console.error(e); 
+                gradeDisplay.innerText = "ERR";
+                subDisplay.innerText = "CONNECTION FAILED";
+            }
             
             btn.innerText = state.mode === 'brutal' ? "DISMANTLE WEAKNESS" : "ELEVATE POTENTIAL";
         }
