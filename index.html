@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VERIX | Sovereign Professional</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* --- CORE --- */
+        :root {
+            --bg-base: #f8fafc;
+            --glass: rgba(255, 255, 255, 0.9);
+            --border: #e2e8f0;
+            --text: #0f172a;
+            --accent: #4f46e5;
+        }
+
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg-base); height: 100vh; overflow: hidden; display: flex; padding: 20px; gap: 20px; color: var(--text); font-size: 14px; }
+
+        /* AURORA ANIMATION */
+        .aurora {
+            position: fixed; inset: 0; z-index: -1;
+            background: 
+                radial-gradient(at 0% 0%, rgba(99,102,241,0.15) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, rgba(236,72,153,0.15) 0, transparent 50%), 
+                radial-gradient(at 100% 100%, rgba(139,92,246,0.15) 0, transparent 50%);
+            animation: pulse 8s ease-in-out infinite alternate;
+        }
+        @keyframes pulse { 0% { opacity: 0.7; } 100% { opacity: 1; } }
+
+        /* PRELOADER */
+        #loader { position: fixed; inset: 0; background: #000; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s; }
+        .loader-bar { width: 200px; height: 3px; background: #333; margin-top: 15px; border-radius: 2px; }
+        .loader-fill { width: 0%; height: 100%; background: white; transition: width 1s; }
+
+        /* LAYOUT PANELS */
+        .panel {
+            background: var(--glass); backdrop-filter: blur(20px);
+            border: 1px solid var(--border); border-radius: 24px;
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.05);
+            display: flex; flex-direction: column; overflow: hidden;
+        }
+
+        /* NAVIGATION BUTTONS */
+        .nav-btn {
+            width: 100%; text-align: left; padding: 14px 18px; border-radius: 14px;
+            font-weight: 700; color: #64748b; margin-bottom: 4px; transition: all 0.2s;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .nav-btn:hover { background: #fff; color: var(--accent); }
+        .nav-btn.active { background: #0f172a; color: white; box-shadow: 0 5px 15px -5px rgba(0,0,0,0.2); }
+
+        /* FORM ELEMENTS */
+        .input-group { margin-bottom: 15px; }
+        .input-label { font-size: 10px; font-weight: 800; text-transform: uppercase; color: #64748b; letter-spacing: 0.05em; margin-bottom: 6px; display: block; }
+        .std-input { width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #cbd5e1; font-weight: 600; outline: none; background: rgba(255,255,255,0.8); transition: border 0.2s; }
+        .std-input:focus { border-color: var(--accent); background: white; }
+        
+        textarea { width: 100%; height: 100%; padding: 24px; background: transparent; border: none; resize: none; outline: none; font-size: 18px; line-height: 1.6; color: #334155; }
+
+        /* ACTION BUTTON */
+        .btn-action {
+            width: 100%; padding: 16px; background: #0f172a; color: white; border-radius: 16px;
+            font-weight: 800; text-transform: uppercase; letter-spacing: 1px; font-size: 12px;
+            transition: transform 0.1s; cursor: pointer;
+        }
+        .btn-action:active { transform: scale(0.98); }
+
+        /* METRIC CARDS */
+        .metric-card { background: white; padding: 16px; border-radius: 16px; border: 1px solid #f1f5f9; margin-bottom: 12px; }
+        .metric-val { font-size: 20px; font-weight: 800; color: #0f172a; }
+        .metric-sub { font-size: 11px; color: #64748b; margin-top: 4px; }
+
+        /* MODULE VISIBILITY */
+        .module { display: none; }
+        .module.active { display: block; }
+        .sub-options { display: none; padding: 20px; background: rgba(255,255,255,0.6); border-bottom: 1px solid #e2e8f0; }
+        .sub-options.active { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+
+        /* OVERLAYS */
+        .overlay { position: absolute; inset: 0; background: rgba(255,255,255,0.95); z-index: 50; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .hidden { display: none !important; }
+
+        /* TERMINAL */
+        .terminal { width: 90%; height: 120px; background: #0f172a; color: #4ade80; border-radius: 12px; padding: 15px; font-family: monospace; overflow-y: auto; margin-top: 20px; font-size: 12px; }
+
+        /* DOWNLOAD BTNS */
+        .btn-dl { width: 100%; padding: 10px; border-radius: 10px; font-size: 11px; font-weight: 700; background: white; border: 1px solid #e2e8f0; color: #475569; margin-top: 6px; cursor: pointer; }
+        .btn-dl:hover { border-color: var(--accent); color: var(--accent); }
+
+    </style>
+</head>
+<body>
+
+    <div class="aurora"></div>
+
+    <div id="loader">
+        <h1 style="color: white; font-weight: 900; font-size: 40px; letter-spacing: -2px;">VERIX</h1>
+        <div class="loader-bar"><div class="loader-fill" id="load-fill"></div></div>
+    </div>
+
+    <aside class="panel" style="width: 260px; padding: 24px; flex-shrink: 0;">
+        <div style="margin-bottom: 30px; font-weight: 900; font-size: 22px; display: flex; align-items: center; gap: 10px;">
+            <div style="width: 32px; height: 32px; background: #0f172a; color: white; border-radius: 8px; display: flex; align-items: center; justify-content: center;">V</div>
+            VERIX
+        </div>
+
+        <nav style="flex: 1; overflow-y: auto;">
+            <div class="input-label" style="padding-left: 10px;">Creation Suite</div>
+            <button id="nav-gen" class="nav-btn active" onclick="setTab('gen')" style="color: var(--accent);">⚡ Generator</button>
+            
+            <div class="input-label" style="padding-left: 10px; margin-top: 20px;">Audit Modules</div>
+            <button id="nav-text" class="nav-btn" onclick="setTab('text')">📝 Writing</button>
+            <button id="nav-voice" class="nav-btn" onclick="setTab('voice')">🎙️ Speaking</button>
+            <button id="nav-art" class="nav-btn" onclick="setTab('art')">🎨 Visual (Beta)</button>
+            <button id="nav-how-to" class="nav-btn" onclick="setTab('how-to')">🚀 Architect</button>
+        </nav>
+
+        <div style="border-top: 1px solid #e2e8f0; padding-top: 20px;">
+            <div id="history-log" style="font-size: 11px; color: #94a3b8; max-height: 100px; overflow-y: auto;">
+                <p>Session Started...</p>
+            </div>
+        </div>
+    </aside>
+
+    <main class="panel" style="flex: 1; position: relative;">
+        
+        <div style="padding: 15px 24px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
+            <div class="input-label" id="context-label">MODE: GENERATOR</div>
+            <div style="display: flex; gap: 8px;">
+                <button onclick="setMode('mentor')" id="btn-mentor" style="padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: 11px; background: #0f172a; color: white;">🌿 MENTOR</button>
+                <button onclick="setMode('truth')" id="btn-truth" style="padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: 11px; background: transparent; color: #64748b;">⚔️ REALITY</button>
+            </div>
+        </div>
+
+        <div id="sub-gen" class="sub-options active">
+            <div><span class="input-label">Topic</span><input id="gen-topic" class="std-input" placeholder="e.g. Resignation Letter"></div>
+            <div><span class="input-label">Tone</span><input id="gen-tone" class="std-input" placeholder="e.g. Professional"></div>
+            <div><span class="input-label">Audience</span><input id="gen-aud" class="std-input" placeholder="e.g. Boss"></div>
+            <div><span class="input-label">Word Limit</span><input id="gen-limit" class="std-input" placeholder="e.g. 200"></div>
+        </div>
+
+        <div id="sub-text" class="sub-options">
+            <div><span class="input-label">Goal Focus</span><select id="txt-focus" class="std-input"><option>Impact</option><option>Grammar</option><option>SEO</option></select></div>
+            <div><span class="input-label">Context</span><input id="txt-context" class="std-input" placeholder="Who is reading this?"></div>
+        </div>
+
+        <div id="sub-how-to" class="sub-options">
+            <div><span class="input-label">Strategic Goal</span><input id="arc-goal" class="std-input" placeholder="Win negotiation..."></div>
+            <div><span class="input-label">Risk Tolerance</span><select id="arc-risk" class="std-input"><option>Conservative</option><option>Aggressive</option></select></div>
+        </div>
+
+        <div style="flex: 1; position: relative; overflow: hidden;">
+            <textarea id="main-input" placeholder="Output / Input Area..."></textarea>
+
+            <div id="voice-ui" class="overlay hidden">
+                <button id="mic-btn" onclick="toggleMic()" style="width: 100px; height: 100px; border-radius: 50%; background: white; border: 4px solid #f1f5f9; font-size: 40px; cursor: pointer; transition: 0.2s;">🎙️</button>
+                <p id="mic-status" class="input-label" style="margin-top: 20px;">TAP TO RECORD</p>
+                <div class="terminal" id="terminal">> System Ready.</div>
+            </div>
+
+            <div id="art-ui" class="overlay hidden">
+                <div style="width: 100%; max-width: 400px; padding: 20px;">
+                    <span class="input-label">Style Reference (Optional)</span>
+                    <input id="art-style" class="std-input" placeholder="e.g. Minimalist, Cyberpunk" style="margin-bottom: 10px;">
+                    <input type="file" id="art-file" class="hidden" onchange="handleImage(event)">
+                    <button onclick="$('art-file').click()" class="btn-action">UPLOAD IMAGE</button>
+                </div>
+                <img id="img-preview" class="hidden" style="max-height: 200px; margin-top: 20px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+            </div>
+        </div>
+
+        <div style="padding: 20px; background: rgba(255,255,255,0.5);">
+            <button onclick="ignite()" id="action-btn" class="btn-action">GENERATE TEXT</button>
+        </div>
+
+    </main>
+
+    <aside class="panel" style="width: 400px; padding: 24px; flex-shrink: 0; overflow-y: auto;">
+        
+        <div style="text-align: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 20px; margin-bottom: 20px;">
+            <div class="input-label">Sovereign Grade</div>
+            <div id="grade-display" style="font-size: 60px; font-weight: 900; line-height: 1; color: #0f172a;">--</div>
+        </div>
+
+        <div class="metric-card" style="background: #0f172a; color: white; border: none;">
+            <div class="input-label" style="color: #94a3b8;">The Verdict</div>
+            <p id="truth-text" style="font-size: 15px; font-weight: 700; line-height: 1.4;">Ready to process.</p>
+        </div>
+
+        <div id="mod-gen" class="module active">
+            <div class="metric-card">
+                <div class="input-label">Impact Analysis</div>
+                <p id="gen-analysis" style="font-size: 13px;">(Generated content analysis)</p>
+            </div>
+        </div>
+
+        <div id="mod-text" class="module">
+            <div class="metric-card">
+                <div class="input-label">Viral Probability</div>
+                <div id="txt-viral" class="metric-val">--%</div>
+                <div style="width: 100%; height: 4px; background: #f1f5f9; margin-top: 5px;"><div id="viral-bar" style="width: 0%; height: 100%; background: var(--accent); transition: width 1s;"></div></div>
+            </div>
+            <div class="metric-card">
+                <div class="input-label">Tone DNA</div>
+                <div id="txt-tone" class="metric-val">--</div>
+            </div>
+            <div class="metric-card" style="background: #f8fafc;">
+                <div class="input-label" style="color: var(--accent);">Polished Rewrite</div>
+                <p id="txt-rewrite" style="font-size: 12px; color: #334155;">(Pending)</p>
+            </div>
+        </div>
+
+        <div id="mod-voice" class="module">
+            <div class="metric-card">
+                <div class="input-label">Cadence Lock</div>
+                <div id="voice-wpm" class="metric-val">-- WPM</div>
+            </div>
+            <div class="metric-card" style="background: #eef2ff; border-color: #c7d2fe;">
+                <div class="input-label" style="color: var(--accent);">AI Enhanced Script</div>
+                <p id="voice-script" style="font-size: 12px; font-style: italic;">(Transcript here)</p>
+            </div>
+            <div id="voice-tools" class="hidden">
+                <button id="dl-raw" class="btn-dl">⬇️ Download Raw WAV</button>
+                <button onclick="playAI()" class="btn-dl" style="background: var(--accent); color: white;">🔊 Play AI Audio</button>
+                <button onclick="dlText()" class="btn-dl">✨ Download Script</button>
+            </div>
+        </div>
+
+        <div id="mod-art" class="module">
+            <div class="metric-card">
+                <div class="input-label">Visual Hierarchy</div>
+                <div id="art-score" class="metric-val">--/10</div>
+            </div>
+            <div class="metric-card">
+                <div class="input-label">AI Interpretation</div>
+                <p id="art-vision" style="font-size: 13px;">(What the AI sees)</p>
+            </div>
+        </div>
+
+        <div id="mod-how-to" class="module">
+            <div class="metric-card">
+                <div class="input-label">Success Probability</div>
+                <div id="arc-prob" class="metric-val">--%</div>
+            </div>
+            <div class="metric-card" style="background: #f0fdf4; border-color: #bbf7d0;">
+                <div class="input-label" style="color: #15803d;">Blueprint</div>
+                <p id="arc-plan" style="font-size: 13px; color: #14532d;">(Steps pending)</p>
+            </div>
+        </div>
+
+    </aside>
+
+    <script>
+        const KEY = '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';
+        let state = { tab: 'gen', mode: 'mentor', recording: false, mediaRecorder: null, audioChunks: [], blobUrl: null };
+        const $ = (id) => document.getElementById(id);
+
+        // INIT
+        window.onload = () => {
+            $('load-fill').style.width = '100%';
+            setTimeout(() => { $('loader').style.opacity = '0'; setTimeout(() => $('loader').style.display='none', 500); }, 1000);
+        };
+
+        // NAV
+        function setTab(t) {
+            state.tab = t;
+            // Buttons
+            ['gen', 'text', 'voice', 'art', 'how-to'].forEach(id => {
+                $(`nav-${id}`).className = id === t ? 'nav-btn active' : 'nav-btn';
+                $(`mod-${id}`).className = id === t ? 'module active' : 'module';
+                const sub = $(`sub-${id}`);
+                if(sub) sub.className = id === t ? 'sub-options active' : 'sub-options';
+                else {
+                    // Hide all other subs if not found
+                    document.querySelectorAll('.sub-options').forEach(el => el.classList.remove('active'));
+                }
+            });
+
+            // Overlays & Context
+            $('voice-ui').classList.toggle('hidden', t !== 'voice');
+            $('art-ui').classList.toggle('hidden', t !== 'art');
+            $('context-label').innerText = `MODE: ${t.toUpperCase()}`;
+            
+            // Action Text
+            $('action-btn').innerText = t === 'gen' ? "GENERATE TEXT" : "INITIATE AUDIT";
+            
+            // Reset
+            $('main-input').value = "";
+            $('grade-display').innerText = "--";
+            $('truth-text').innerText = "System ready.";
+        }
+
+        function setMode(m) {
+            state.mode = m;
+            $('btn-mentor').style.background = m === 'mentor' ? '#0f172a' : 'transparent';
+            $('btn-mentor').style.color = m === 'mentor' ? 'white' : '#64748b';
+            $('btn-truth').style.background = m === 'truth' ? '#0f172a' : 'transparent';
+            $('btn-truth').style.color = m === 'truth' ? 'white' : '#64748b';
+        }
+
+        // VOICE LOGIC
+        async function toggleMic() {
+            if(state.recording) {
+                state.recording = false;
+                state.mediaRecorder.stop();
+                window.speech.stop();
+                $('mic-btn').style.borderColor = "#f1f5f9";
+                $('mic-status').innerText = "PROCESSING...";
+            } else {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    state.audioChunks = [];
+                    state.mediaRecorder = new MediaRecorder(stream);
+                    state.mediaRecorder.ondataavailable = e => state.audioChunks.push(e.data);
+                    state.mediaRecorder.onstop = () => {
+                        const blob = new Blob(state.audioChunks, { type: 'audio/wav' });
+                        state.blobUrl = URL.createObjectURL(blob);
+                        $('voice-tools').classList.remove('hidden');
+                        $('dl-raw').onclick = () => download(state.blobUrl, 'verix_raw.wav');
+                        ignite();
+                    };
+                    state.mediaRecorder.start();
+                    state.recording = true;
+                    $('mic-btn').style.borderColor = "#ef4444";
+                    $('mic-status').innerText = "LISTENING...";
+                    
+                    const Recog = window.SpeechRecognition || window.webkitSpeechRecognition;
+                    window.speech = new Recog();
+                    window.speech.continuous = true;
+                    window.speech.interimResults = true;
+                    window.speech.onresult = (e) => {
+                        let t = "";
+                        for(let i=e.resultIndex; i<e.results.length; ++i) t += e.results[i][0].transcript;
+                        $('terminal').innerText = `> ${t}`;
+                        $('main-input').value = t;
+                    };
+                    window.speech.start();
+                } catch(e) { alert("Mic Error"); }
+            }
+        }
+
+        function playAI() {
+            const text = $('voice-script').innerText;
+            const u = new SpeechSynthesisUtterance(text);
+            window.speechSynthesis.speak(u);
+        }
+
+        function dlText() {
+            const text = $('voice-script').innerText;
+            const blob = new Blob([text], {type:'text/plain'});
+            download(URL.createObjectURL(blob), 'verix_script.txt');
+        }
+
+        function download(url, name) {
+            const a = document.createElement('a'); a.href = url; a.download = name; a.click();
+        }
+
+        // AI ENGINE
+        async function ignite() {
+            $('action-btn').innerText = "PROCESSING...";
+            let input = $('main-input').value;
+            let prompt = `You are VERIX Sovereign. Grade strictly (S/A/B/C). `;
+            if(state.mode === 'truth') prompt += "Mode: Brutal Truth. ";
+            let schema = "";
+
+            // Construct Input based on Module
+            if(state.tab === 'gen') {
+                input = `Topic: ${$('gen-topic').value}. Tone: ${$('gen-tone').value}. Audience: ${$('gen-aud').value}. Limit: ${$('gen-limit').value}`;
+                prompt = "You are a Ghostwriter.";
+                schema = `{"grade": "GEN", "truth": "Generated.", "text": "...", "analysis": "..."}`;
+            } else if (state.tab === 'text') {
+                input = `Context: ${$('txt-context').value}. Focus: ${$('txt-focus').value}. Text: ${input}`;
+                schema = `{"grade": "B", "truth": "...", "viral": 85, "tone": "...", "rewrite": "..."}`;
+            } else if (state.tab === 'voice') {
+                schema = `{"grade": "A", "truth": "...", "polished": "...", "wpm": 140}`;
+            } else if (state.tab === 'how-to') {
+                input = `Goal: ${$('arc-goal').value}. Risk: ${$('arc-risk').value}. Details: ${input}`;
+                schema = `{"grade": "A", "truth": "...", "prob": 90, "steps": "..."}`;
+            } else { // Art
+                input = "Analyze this visual concept.";
+                schema = `{"grade": "C", "truth": "...", "hierarchy": 5, "vision": "..."}`;
+            }
+
+            try {
+                const r = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+                    method: 'POST',
+                    headers: {'Authorization': `Bearer ${KEY}`, 'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        model: "google/gemini-2.0-flash-001",
+                        messages: [{role:"system", content: prompt + " JSON ONLY: " + schema}, {role:"user", content: input}],
+                        response_format: { type: "json_object" }
+                    })
+                });
+                const d = await r.json();
+                let clean = d.choices[0].message.content.replace(/```json/g, '').replace(/```/g, '');
+                const res = JSON.parse(clean);
+
+                $('grade-display').innerText = res.grade || "GEN";
+                $('truth-text').innerText = res.truth;
+
+                // Populate Specifics
+                if(state.tab === 'gen') {
+                    $('main-input').value = res.text;
+                    $('gen-analysis').innerText = res.analysis;
+                } else if(state.tab === 'text') {
+                    $('txt-viral').innerText = res.viral + "%";
+                    $('viral-bar').style.width = res.viral + "%";
+                    $('txt-tone').innerText = res.tone;
+                    $('txt-rewrite').innerText = res.rewrite;
+                } else if(state.tab === 'voice') {
+                    $('voice-script').innerText = res.polished;
+                    $('voice-wpm').innerText = res.wpm + " WPM";
+                } else if(state.tab === 'how-to') {
+                    $('arc-prob').innerText = res.prob + "%";
+                    $('arc-plan').innerText = res.steps;
+                } else if(state.tab === 'art') {
+                    $('art-score').innerText = res.hierarchy + "/10";
+                    $('art-vision').innerText = res.vision;
+                }
+
+                // Log
+                const h = document.createElement('div');
+                h.innerText = `${state.tab.toUpperCase()}: ${res.grade}`;
+                $('history-log').prepend(h);
+
+            } catch(e) { console.error(e); alert("Error"); }
+            $('action-btn').innerText = state.tab === 'gen' ? "GENERATE TEXT" : "INITIATE AUDIT";
+        }
+
+        function handleImage(e) {
+            const r = new FileReader();
+            r.onload = () => { state.img = r.result.split(',')[1]; $('img-preview').src = r.result; $('img-preview').classList.remove('hidden'); };
+            r.readAsDataURL(e.target.files[0]);
+        }
+    </script>
+</body>
+</html>
