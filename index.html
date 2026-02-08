@@ -3,385 +3,269 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VERIX | Sovereign Professional</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>VELIX | Sovereign Apex</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* --- CORE --- */
-        :root {
-            --bg-base: #f8fafc;
-            --glass: rgba(255, 255, 255, 0.9);
-            --border: #e2e8f0;
-            --text: #0f172a;
-            --accent: #4f46e5;
+        :root { 
+            --bg: #030712; 
+            --panel: rgba(17, 24, 39, 0.95); 
+            --accent: #6366f1; 
+            --mentor: #10b981;
+            --brutal: #ef4444;
+            --text: #f8fafc; 
+            --rainbow: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff); 
         }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); height: 100vh; display: flex; overflow: hidden; }
 
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg-base); height: 100vh; overflow: hidden; display: flex; padding: 20px; gap: 20px; color: var(--text); font-size: 14px; }
+        /* CINEMATIC AURORA */
+        .aurora { position: fixed; inset: 0; z-index: -1; background: radial-gradient(at 0% 0%, rgba(99,102,241,0.15) 0, transparent 50%), radial-gradient(at 100% 100%, rgba(236,72,153,0.15) 0, transparent 50%); background-image: radial-gradient(at 50% 50%, rgba(255,255,255,0.02) 0, transparent 50%); animation: pulse 8s infinite; }
+        @keyframes pulse { 0% { opacity: 0.8; } 50% { opacity: 1; } 100% { opacity: 0.8; } }
 
-        /* AURORA ANIMATION */
-        .aurora {
-            position: fixed; inset: 0; z-index: -1;
-            background: 
-                radial-gradient(at 0% 0%, rgba(99,102,241,0.15) 0, transparent 50%), 
-                radial-gradient(at 100% 0%, rgba(236,72,153,0.15) 0, transparent 50%), 
-                radial-gradient(at 100% 100%, rgba(139,92,246,0.15) 0, transparent 50%);
-            animation: pulse 8s ease-in-out infinite alternate;
-        }
-        @keyframes pulse { 0% { opacity: 0.7; } 100% { opacity: 1; } }
+        /* LOADING SCREEN */
+        #loader { position: fixed; inset: 0; background: #020617; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: 0.8s ease-out; }
+        .loader-bar { width: 200px; height: 2px; background: rgba(255,255,255,0.1); margin-top: 20px; position: relative; overflow: hidden; }
+        .loader-fill { position: absolute; top: 0; left: 0; height: 100%; width: 0%; background: var(--accent); transition: 2s ease-in-out; }
+        .loader-text { font-size: 12px; font-weight: 800; letter-spacing: 4px; color: var(--accent); margin-bottom: 10px; }
 
-        /* PRELOADER */
-        #loader { position: fixed; inset: 0; background: #000; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s; }
-        .loader-bar { width: 200px; height: 3px; background: #333; margin-top: 15px; border-radius: 2px; }
-        .loader-fill { width: 0%; height: 100%; background: white; transition: width 1s; }
+        /* VISION OVERLAY */
+        #vision-overlay { position: fixed; inset: 0; background: rgba(2, 6, 23, 0.98); z-index: 2000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
+        .vision-card { width: 900px; background: #0f172a; border: 1px solid rgba(255,255,255,0.1); border-radius: 30px; padding: 50px; position: relative; box-shadow: 0 0 100px rgba(0,0,0,0.8); }
+        .v-header { font-size: 48px; font-weight: 900; background: var(--rainbow); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 20px; }
+        .v-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 30px; }
+        .v-item h3 { color: white; margin-bottom: 10px; font-size: 18px; }
+        .v-item p { color: #94a3b8; font-size: 14px; line-height: 1.6; }
 
-        /* LAYOUT PANELS */
-        .panel {
-            background: var(--glass); backdrop-filter: blur(20px);
-            border: 1px solid var(--border); border-radius: 24px;
-            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.05);
-            display: flex; flex-direction: column; overflow: hidden;
-        }
-
-        /* NAVIGATION BUTTONS */
-        .nav-btn {
-            width: 100%; text-align: left; padding: 14px 18px; border-radius: 14px;
-            font-weight: 700; color: #64748b; margin-bottom: 4px; transition: all 0.2s;
-            display: flex; align-items: center; gap: 10px;
-        }
-        .nav-btn:hover { background: #fff; color: var(--accent); }
-        .nav-btn.active { background: #0f172a; color: white; box-shadow: 0 5px 15px -5px rgba(0,0,0,0.2); }
-
-        /* FORM ELEMENTS */
-        .input-group { margin-bottom: 15px; }
-        .input-label { font-size: 10px; font-weight: 800; text-transform: uppercase; color: #64748b; letter-spacing: 0.05em; margin-bottom: 6px; display: block; }
-        .std-input { width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #cbd5e1; font-weight: 600; outline: none; background: rgba(255,255,255,0.8); transition: border 0.2s; }
-        .std-input:focus { border-color: var(--accent); background: white; }
+        /* SIDEBAR */
+        .sidebar { width: 300px; background: var(--panel); border-right: 1px solid rgba(255,255,255,0.05); padding: 30px 20px; display: flex; flex-direction: column; backdrop-filter: blur(20px); }
+        .logo { font-size: 26px; font-weight: 900; margin-bottom: 40px; color: white; letter-spacing: -1px; display: flex; align-items: center; gap: 10px; }
+        .logo span { background: var(--rainbow); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
-        textarea { width: 100%; height: 100%; padding: 24px; background: transparent; border: none; resize: none; outline: none; font-size: 18px; line-height: 1.6; color: #334155; }
+        .nav-cat { font-size: 10px; font-weight: 800; color: #475569; text-transform: uppercase; letter-spacing: 1px; margin: 20px 0 10px 10px; }
+        .nav-btn { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid transparent; background: transparent; color: #94a3b8; text-align: left; font-weight: 700; cursor: pointer; margin-bottom: 4px; display: flex; align-items: center; gap: 12px; transition: 0.2s; }
+        .nav-btn:hover { background: rgba(255,255,255,0.03); color: white; }
+        .nav-btn.active { background: rgba(99, 102, 241, 0.1); color: white; border-color: var(--accent); }
 
-        /* ACTION BUTTON */
-        .btn-action {
-            width: 100%; padding: 16px; background: #0f172a; color: white; border-radius: 16px;
-            font-weight: 800; text-transform: uppercase; letter-spacing: 1px; font-size: 12px;
-            transition: transform 0.1s; cursor: pointer;
-        }
-        .btn-action:active { transform: scale(0.98); }
+        /* WORKSPACE */
+        .workspace { flex: 1; display: flex; flex-direction: column; padding: 40px; position: relative; }
+        
+        /* DUAL MODE SWITCH */
+        .mode-switch { background: rgba(255,255,255,0.03); border-radius: 100px; padding: 5px; display: flex; width: fit-content; margin-bottom: 30px; border: 1px solid rgba(255,255,255,0.1); }
+        .mode-btn { padding: 10px 25px; border-radius: 100px; border: none; background: transparent; color: #94a3b8; font-weight: 800; cursor: pointer; transition: 0.3s; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
+        .mode-btn.active-brutal { background: var(--brutal); color: white; box-shadow: 0 0 20px rgba(239,68,68,0.4); }
+        .mode-btn.active-mentor { background: var(--mentor); color: white; box-shadow: 0 0 20px rgba(16,185,129,0.4); }
 
-        /* METRIC CARDS */
-        .metric-card { background: white; padding: 16px; border-radius: 16px; border: 1px solid #f1f5f9; margin-bottom: 12px; }
-        .metric-val { font-size: 20px; font-weight: 800; color: #0f172a; }
-        .metric-sub { font-size: 11px; color: #64748b; margin-top: 4px; }
+        /* TOOLBARS */
+        .toolbar { display: none; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+        .toolbar.active { display: flex; }
+        input, select { background: #0f172a; border: 1px solid rgba(255,255,255,0.1); padding: 14px; border-radius: 12px; color: white; font-weight: 700; outline: none; font-size: 13px; flex: 1; min-width: 140px; }
+        
+        textarea { flex: 1; background: transparent; border: none; outline: none; color: white; font-size: 20px; font-weight: 500; line-height: 1.6; resize: none; margin-bottom: 20px; }
+        
+        /* ANALYTICS */
+        .analytics { width: 440px; background: rgba(0,0,0,0.6); border-left: 1px solid rgba(255,255,255,0.1); padding: 40px; overflow-y: auto; display: flex; flex-direction: column; }
+        .grade-box { text-align: center; margin-bottom: 30px; }
+        .grade { font-size: 100px; font-weight: 900; line-height: 1; margin-bottom: 5px; background: var(--rainbow); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        .result-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 25px; border-radius: 20px; margin-bottom: 15px; }
+        .rc-label { font-size: 10px; font-weight: 900; text-transform: uppercase; color: #64748b; margin-bottom: 10px; display: block; letter-spacing: 1px; }
+        
+        .btn-action { width: 100%; padding: 20px; border-radius: 16px; background: var(--accent); color: white; border: none; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: 0.2s; font-size: 14px; }
+        .btn-action:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(99,102,241,0.3); }
 
-        /* MODULE VISIBILITY */
-        .module { display: none; }
-        .module.active { display: block; }
-        .sub-options { display: none; padding: 20px; background: rgba(255,255,255,0.6); border-bottom: 1px solid #e2e8f0; }
-        .sub-options.active { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        /* VOICE */
+        #voice-panel { display: none; gap: 15px; margin-bottom: 20px; }
+        .v-stat { background: rgba(255,255,255,0.03); padding: 15px; border-radius: 12px; flex: 1; text-align: center; }
+        .v-val { font-size: 20px; font-weight: 900; color: white; }
 
-        /* OVERLAYS */
-        .overlay { position: absolute; inset: 0; background: rgba(255,255,255,0.95); z-index: 50; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .hidden { display: none !important; }
-
-        /* TERMINAL */
-        .terminal { width: 90%; height: 120px; background: #0f172a; color: #4ade80; border-radius: 12px; padding: 15px; font-family: monospace; overflow-y: auto; margin-top: 20px; font-size: 12px; }
-
-        /* DOWNLOAD BTNS */
-        .btn-dl { width: 100%; padding: 10px; border-radius: 10px; font-size: 11px; font-weight: 700; background: white; border: 1px solid #e2e8f0; color: #475569; margin-top: 6px; cursor: pointer; }
-        .btn-dl:hover { border-color: var(--accent); color: var(--accent); }
-
+        /* HISTORY */
+        .hist-item { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 11px; color: #94a3b8; display: flex; justify-content: space-between; }
+        .hist-grade { font-weight: 900; color: white; }
     </style>
 </head>
 <body>
-
     <div class="aurora"></div>
 
     <div id="loader">
-        <h1 style="color: white; font-weight: 900; font-size: 40px; letter-spacing: -2px;">VERIX</h1>
-        <div class="loader-bar"><div class="loader-fill" id="load-fill"></div></div>
+        <div class="loader-text">INITIALIZING VELIX CORE</div>
+        <div class="loader-bar"><div class="loader-fill" id="l-fill"></div></div>
     </div>
 
-    <aside class="panel" style="width: 260px; padding: 24px; flex-shrink: 0;">
-        <div style="margin-bottom: 30px; font-weight: 900; font-size: 22px; display: flex; align-items: center; gap: 10px;">
-            <div style="width: 32px; height: 32px; background: #0f172a; color: white; border-radius: 8px; display: flex; align-items: center; justify-content: center;">V</div>
-            VERIX
-        </div>
-
-        <nav style="flex: 1; overflow-y: auto;">
-            <div class="input-label" style="padding-left: 10px;">Creation Suite</div>
-            <button id="nav-gen" class="nav-btn active" onclick="setTab('gen')" style="color: var(--accent);">⚡ Generator</button>
+    <div id="vision-overlay">
+        <div class="vision-card">
+            <h1 class="v-header">VELIX SOVEREIGN</h1>
+            <p style="font-size: 18px; color: #cbd5e1; margin-bottom: 30px;">The definitive A.I. audit engine. Choose your path: <b>Brutal Truth</b> for relentless critique, or <b>Mentor</b> for strategic growth.</p>
             
-            <div class="input-label" style="padding-left: 10px; margin-top: 20px;">Audit Modules</div>
-            <button id="nav-text" class="nav-btn" onclick="setTab('text')">📝 Writing</button>
-            <button id="nav-voice" class="nav-btn" onclick="setTab('voice')">🎙️ Speaking</button>
-            <button id="nav-art" class="nav-btn" onclick="setTab('art')">🎨 Visual (Beta)</button>
-            <button id="nav-how-to" class="nav-btn" onclick="setTab('how-to')">🚀 Architect</button>
-        </nav>
-
-        <div style="border-top: 1px solid #e2e8f0; padding-top: 20px;">
-            <div id="history-log" style="font-size: 11px; color: #94a3b8; max-height: 100px; overflow-y: auto;">
-                <p>Session Started...</p>
+            <div class="v-grid">
+                <div class="v-item">
+                    <h3>⚔️ Brutal Truth</h3>
+                    <p>Zero empathy. Logic flaws are destroyed. Grades are strict. Best for stress-testing ideas.</p>
+                </div>
+                <div class="v-item">
+                    <h3>🌿 Mentor Mode</h3>
+                    <p>Constructive analysis. Focuses on potential and actionable steps. Best for improvement.</p>
+                </div>
             </div>
+            <button class="btn-action" style="margin-top: 40px;" onclick="closeVision()">ENTER COMMAND</button>
+        </div>
+    </div>
+
+    <aside class="sidebar">
+        <div class="logo">VELIX <span>APEX</span></div>
+        
+        <div class="nav-cat">Creation Engine</div>
+        <button class="nav-btn active" id="nav-gen" onclick="setTab('gen')">⚡ Generator</button>
+        <button class="nav-btn" id="nav-text" onclick="setTab('text')">📝 Writing Audit</button>
+        <button class="nav-btn" id="nav-voice" onclick="setTab('voice')">🎙️ Voice Lab</button>
+        
+        <div class="nav-cat">Specialized</div>
+        <button class="nav-btn" id="nav-art" onclick="setTab('art')">🎨 Art Audit</button>
+        <button class="nav-btn" id="nav-arc" onclick="setTab('arc')">🚀 Architect</button>
+
+        <div style="margin-top: auto; background: rgba(0,0,0,0.2); padding: 20px; border-radius: 16px;">
+            <div class="nav-cat" style="margin-top:0">Session History</div>
+            <div id="history-log" style="max-height: 150px; overflow-y: auto;"></div>
         </div>
     </aside>
 
-    <main class="panel" style="flex: 1; position: relative;">
+    <main class="workspace">
+        <div class="mode-switch">
+            <button class="mode-btn active-brutal" id="m-brutal" onclick="setMode('brutal')">⚔️ Brutal Truth</button>
+            <button class="mode-btn" id="m-mentor" onclick="setMode('mentor')">🌿 Mentor</button>
+        </div>
+
+        <div id="tool-gen" class="toolbar active">
+            <input id="g-topic" placeholder="Topic / Niche">
+            <input id="g-tone" placeholder="Tone (e.g. Viral)">
+            <select id="g-format"><option>LinkedIn Post</option><option>Twitter Thread</option><option>Blog Intro</option></select>
+            <input id="g-hook" placeholder="Viral Hook (Optional)">
+        </div>
+
+        <div id="tool-text" class="toolbar">
+            <select id="t-focus"><option>Logic & Flow</option><option>Grammar & Syntax</option><option>Persuasion</option></select>
+            <input id="t-aud" placeholder="Target Audience">
+            <input id="t-read" type="number" placeholder="Grade Level (1-12)" style="max-width: 120px;">
+        </div>
+
+        <div id="voice-panel">
+            <div class="v-stat"><div class="v-val" id="wpm">0</div><div style="font-size:10px; color:#94a3b8">WPM</div></div>
+            <div class="v-stat"><div class="v-val" id="dur">00:00</div><div style="font-size:10px; color:#94a3b8">TIME</div></div>
+            <button onclick="toggleRec()" style="flex:2; background:#ef4444; border:none; color:white; border-radius:12px; font-weight:800; cursor:pointer;">🔴 REC / STOP</button>
+        </div>
+
+        <div id="tool-art" class="toolbar">
+            <input id="a-style" placeholder="Style (e.g. Bauhaus)">
+            <select id="a-comp"><option>Rule of Thirds</option><option>Golden Ratio</option><option>Symmetry</option></select>
+            <input id="a-color" placeholder="Palette (e.g. Neon)">
+        </div>
+
+        <div id="tool-arc" class="toolbar">
+            <input id="arc-goal" placeholder="Project Goal">
+            <select id="arc-res"><option>Low Budget</option><option>Unlimited</option></select>
+            <input id="arc-risk" type="range" min="1" max="10" title="Risk Level">
+        </div>
+
+        <textarea id="main-input" placeholder="Awaiting raw data..."></textarea>
         
-        <div style="padding: 15px 24px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
-            <div class="input-label" id="context-label">MODE: GENERATOR</div>
-            <div style="display: flex; gap: 8px;">
-                <button onclick="setMode('mentor')" id="btn-mentor" style="padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: 11px; background: #0f172a; color: white;">🌿 MENTOR</button>
-                <button onclick="setMode('truth')" id="btn-truth" style="padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: 11px; background: transparent; color: #64748b;">⚔️ REALITY</button>
-            </div>
-        </div>
-
-        <div id="sub-gen" class="sub-options active">
-            <div><span class="input-label">Topic</span><input id="gen-topic" class="std-input" placeholder="e.g. Resignation Letter"></div>
-            <div><span class="input-label">Tone</span><input id="gen-tone" class="std-input" placeholder="e.g. Professional"></div>
-            <div><span class="input-label">Audience</span><input id="gen-aud" class="std-input" placeholder="e.g. Boss"></div>
-            <div><span class="input-label">Word Limit</span><input id="gen-limit" class="std-input" placeholder="e.g. 200"></div>
-        </div>
-
-        <div id="sub-text" class="sub-options">
-            <div><span class="input-label">Goal Focus</span><select id="txt-focus" class="std-input"><option>Impact</option><option>Grammar</option><option>SEO</option></select></div>
-            <div><span class="input-label">Context</span><input id="txt-context" class="std-input" placeholder="Who is reading this?"></div>
-        </div>
-
-        <div id="sub-how-to" class="sub-options">
-            <div><span class="input-label">Strategic Goal</span><input id="arc-goal" class="std-input" placeholder="Win negotiation..."></div>
-            <div><span class="input-label">Risk Tolerance</span><select id="arc-risk" class="std-input"><option>Conservative</option><option>Aggressive</option></select></div>
-        </div>
-
-        <div style="flex: 1; position: relative; overflow: hidden;">
-            <textarea id="main-input" placeholder="Output / Input Area..."></textarea>
-
-            <div id="voice-ui" class="overlay hidden">
-                <button id="mic-btn" onclick="toggleMic()" style="width: 100px; height: 100px; border-radius: 50%; background: white; border: 4px solid #f1f5f9; font-size: 40px; cursor: pointer; transition: 0.2s;">🎙️</button>
-                <p id="mic-status" class="input-label" style="margin-top: 20px;">TAP TO RECORD</p>
-                <div class="terminal" id="terminal">> System Ready.</div>
-            </div>
-
-            <div id="art-ui" class="overlay hidden">
-                <div style="width: 100%; max-width: 400px; padding: 20px;">
-                    <span class="input-label">Style Reference (Optional)</span>
-                    <input id="art-style" class="std-input" placeholder="e.g. Minimalist, Cyberpunk" style="margin-bottom: 10px;">
-                    <input type="file" id="art-file" class="hidden" onchange="handleImage(event)">
-                    <button onclick="$('art-file').click()" class="btn-action">UPLOAD IMAGE</button>
-                </div>
-                <img id="img-preview" class="hidden" style="max-height: 200px; margin-top: 20px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
-            </div>
-        </div>
-
-        <div style="padding: 20px; background: rgba(255,255,255,0.5);">
-            <button onclick="ignite()" id="action-btn" class="btn-action">GENERATE TEXT</button>
-        </div>
-
+        <button class="btn-action" onclick="ignite()" id="action-btn">INITIATE ANALYSIS</button>
     </main>
 
-    <aside class="panel" style="width: 400px; padding: 24px; flex-shrink: 0; overflow-y: auto;">
-        
-        <div style="text-align: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 20px; margin-bottom: 20px;">
-            <div class="input-label">Sovereign Grade</div>
-            <div id="grade-display" style="font-size: 60px; font-weight: 900; line-height: 1; color: #0f172a;">--</div>
+    <aside class="analytics">
+        <div class="grade-box">
+            <div class="rc-label">SOVEREIGN GRADE</div>
+            <div class="grade" id="grade">--</div>
         </div>
 
-        <div class="metric-card" style="background: #0f172a; color: white; border: none;">
-            <div class="input-label" style="color: #94a3b8;">The Verdict</div>
-            <p id="truth-text" style="font-size: 15px; font-weight: 700; line-height: 1.4;">Ready to process.</p>
+        <div class="result-card" id="card-feedback" style="border-left: 4px solid #ef4444;">
+            <span class="rc-label" id="lbl-feedback">THE KILLSHOT</span>
+            <p id="txt-feedback" style="font-size: 18px; font-weight: 700; color: white;">Awaiting audit.</p>
         </div>
 
-        <div id="mod-gen" class="module active">
-            <div class="metric-card">
-                <div class="input-label">Impact Analysis</div>
-                <p id="gen-analysis" style="font-size: 13px;">(Generated content analysis)</p>
-            </div>
+        <div class="result-card">
+            <span class="rc-label">AI ENHANCED VERSION</span>
+            <p id="txt-enhance" style="font-size: 14px; color: #cbd5e1; line-height: 1.6;">No data.</p>
+            <button onclick="playAudio()" style="margin-top:15px; background:rgba(255,255,255,0.1); border:none; color:white; padding:10px; width:100%; border-radius:10px; font-weight:700; cursor:pointer;">🔊 PLAY AUDIO</button>
         </div>
-
-        <div id="mod-text" class="module">
-            <div class="metric-card">
-                <div class="input-label">Viral Probability</div>
-                <div id="txt-viral" class="metric-val">--%</div>
-                <div style="width: 100%; height: 4px; background: #f1f5f9; margin-top: 5px;"><div id="viral-bar" style="width: 0%; height: 100%; background: var(--accent); transition: width 1s;"></div></div>
-            </div>
-            <div class="metric-card">
-                <div class="input-label">Tone DNA</div>
-                <div id="txt-tone" class="metric-val">--</div>
-            </div>
-            <div class="metric-card" style="background: #f8fafc;">
-                <div class="input-label" style="color: var(--accent);">Polished Rewrite</div>
-                <p id="txt-rewrite" style="font-size: 12px; color: #334155;">(Pending)</p>
-            </div>
-        </div>
-
-        <div id="mod-voice" class="module">
-            <div class="metric-card">
-                <div class="input-label">Cadence Lock</div>
-                <div id="voice-wpm" class="metric-val">-- WPM</div>
-            </div>
-            <div class="metric-card" style="background: #eef2ff; border-color: #c7d2fe;">
-                <div class="input-label" style="color: var(--accent);">AI Enhanced Script</div>
-                <p id="voice-script" style="font-size: 12px; font-style: italic;">(Transcript here)</p>
-            </div>
-            <div id="voice-tools" class="hidden">
-                <button id="dl-raw" class="btn-dl">⬇️ Download Raw WAV</button>
-                <button onclick="playAI()" class="btn-dl" style="background: var(--accent); color: white;">🔊 Play AI Audio</button>
-                <button onclick="dlText()" class="btn-dl">✨ Download Script</button>
-            </div>
-        </div>
-
-        <div id="mod-art" class="module">
-            <div class="metric-card">
-                <div class="input-label">Visual Hierarchy</div>
-                <div id="art-score" class="metric-val">--/10</div>
-            </div>
-            <div class="metric-card">
-                <div class="input-label">AI Interpretation</div>
-                <p id="art-vision" style="font-size: 13px;">(What the AI sees)</p>
-            </div>
-        </div>
-
-        <div id="mod-how-to" class="module">
-            <div class="metric-card">
-                <div class="input-label">Success Probability</div>
-                <div id="arc-prob" class="metric-val">--%</div>
-            </div>
-            <div class="metric-card" style="background: #f0fdf4; border-color: #bbf7d0;">
-                <div class="input-label" style="color: #15803d;">Blueprint</div>
-                <p id="arc-plan" style="font-size: 13px; color: #14532d;">(Steps pending)</p>
-            </div>
-        </div>
-
     </aside>
 
     <script>
-        const KEY = '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';
-        let state = { tab: 'gen', mode: 'mentor', recording: false, mediaRecorder: null, audioChunks: [], blobUrl: null };
-        const $ = (id) => document.getElementById(id);
+        const KEY = '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';
+        let state = { tab: 'gen', mode: 'brutal' };
+        let recognition, timer, startTime;
 
-        // INIT
+        // LOAD SEQUENCE
         window.onload = () => {
-            $('load-fill').style.width = '100%';
-            setTimeout(() => { $('loader').style.opacity = '0'; setTimeout(() => $('loader').style.display='none', 500); }, 1000);
+            document.getElementById('l-fill').style.width = '100%';
+            setTimeout(() => {
+                document.getElementById('loader').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loader').style.display = 'none';
+                    document.getElementById('vision-overlay').style.display = 'flex';
+                }, 800);
+            }, 1500);
         };
 
-        // NAV
+        function closeVision() { document.getElementById('vision-overlay').style.display = 'none'; }
+
         function setTab(t) {
             state.tab = t;
-            // Buttons
-            ['gen', 'text', 'voice', 'art', 'how-to'].forEach(id => {
-                $(`nav-${id}`).className = id === t ? 'nav-btn active' : 'nav-btn';
-                $(`mod-${id}`).className = id === t ? 'module active' : 'module';
-                const sub = $(`sub-${id}`);
-                if(sub) sub.className = id === t ? 'sub-options active' : 'sub-options';
-                else {
-                    // Hide all other subs if not found
-                    document.querySelectorAll('.sub-options').forEach(el => el.classList.remove('active'));
-                }
-            });
-
-            // Overlays & Context
-            $('voice-ui').classList.toggle('hidden', t !== 'voice');
-            $('art-ui').classList.toggle('hidden', t !== 'art');
-            $('context-label').innerText = `MODE: ${t.toUpperCase()}`;
-            
-            // Action Text
-            $('action-btn').innerText = t === 'gen' ? "GENERATE TEXT" : "INITIATE AUDIT";
-            
-            // Reset
-            $('main-input').value = "";
-            $('grade-display').innerText = "--";
-            $('truth-text').innerText = "System ready.";
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('active', b.id.includes(t)));
+            document.querySelectorAll('.toolbar').forEach(b => b.classList.toggle('active', b.id.includes(t)));
+            document.getElementById('voice-panel').style.display = t === 'voice' ? 'flex' : 'none';
+            document.getElementById('main-input').value = "";
         }
 
         function setMode(m) {
             state.mode = m;
-            $('btn-mentor').style.background = m === 'mentor' ? '#0f172a' : 'transparent';
-            $('btn-mentor').style.color = m === 'mentor' ? 'white' : '#64748b';
-            $('btn-truth').style.background = m === 'truth' ? '#0f172a' : 'transparent';
-            $('btn-truth').style.color = m === 'truth' ? 'white' : '#64748b';
+            document.getElementById('m-brutal').className = `mode-btn ${m==='brutal'?'active-brutal':''}`;
+            document.getElementById('m-mentor').className = `mode-btn ${m==='mentor'?'active-mentor':''}`;
+            
+            // UI Update based on mode
+            const color = m === 'brutal' ? '#ef4444' : '#10b981';
+            document.getElementById('card-feedback').style.borderLeftColor = color;
+            document.getElementById('lbl-feedback').innerText = m === 'brutal' ? "THE KILLSHOT" : "GROWTH PATH";
+            document.getElementById('lbl-feedback').style.color = color;
         }
 
         // VOICE LOGIC
-        async function toggleMic() {
-            if(state.recording) {
-                state.recording = false;
-                state.mediaRecorder.stop();
-                window.speech.stop();
-                $('mic-btn').style.borderColor = "#f1f5f9";
-                $('mic-status').innerText = "PROCESSING...";
+        function toggleRec() {
+            if(!recognition) {
+                recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+                recognition.continuous = true;
+                recognition.onresult = e => {
+                    const txt = e.results[e.results.length-1][0].transcript;
+                    document.getElementById('main-input').value += txt + " ";
+                    const wpm = Math.round(document.getElementById('main-input').value.split(' ').length / ((new Date() - startTime)/60000));
+                    document.getElementById('wpm').innerText = wpm || 0;
+                };
+            }
+            if(timer) {
+                recognition.stop();
+                clearInterval(timer);
+                timer = null;
             } else {
-                try {
-                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                    state.audioChunks = [];
-                    state.mediaRecorder = new MediaRecorder(stream);
-                    state.mediaRecorder.ondataavailable = e => state.audioChunks.push(e.data);
-                    state.mediaRecorder.onstop = () => {
-                        const blob = new Blob(state.audioChunks, { type: 'audio/wav' });
-                        state.blobUrl = URL.createObjectURL(blob);
-                        $('voice-tools').classList.remove('hidden');
-                        $('dl-raw').onclick = () => download(state.blobUrl, 'verix_raw.wav');
-                        ignite();
-                    };
-                    state.mediaRecorder.start();
-                    state.recording = true;
-                    $('mic-btn').style.borderColor = "#ef4444";
-                    $('mic-status').innerText = "LISTENING...";
-                    
-                    const Recog = window.SpeechRecognition || window.webkitSpeechRecognition;
-                    window.speech = new Recog();
-                    window.speech.continuous = true;
-                    window.speech.interimResults = true;
-                    window.speech.onresult = (e) => {
-                        let t = "";
-                        for(let i=e.resultIndex; i<e.results.length; ++i) t += e.results[i][0].transcript;
-                        $('terminal').innerText = `> ${t}`;
-                        $('main-input').value = t;
-                    };
-                    window.speech.start();
-                } catch(e) { alert("Mic Error"); }
+                recognition.start();
+                startTime = new Date();
+                timer = setInterval(() => {
+                    const diff = Math.floor((new Date() - startTime)/1000);
+                    const m = Math.floor(diff/60).toString().padStart(2,'0');
+                    const s = (diff%60).toString().padStart(2,'0');
+                    document.getElementById('dur').innerText = `${m}:${s}`;
+                }, 1000);
             }
         }
 
-        function playAI() {
-            const text = $('voice-script').innerText;
-            const u = new SpeechSynthesisUtterance(text);
-            window.speechSynthesis.speak(u);
-        }
-
-        function dlText() {
-            const text = $('voice-script').innerText;
-            const blob = new Blob([text], {type:'text/plain'});
-            download(URL.createObjectURL(blob), 'verix_script.txt');
-        }
-
-        function download(url, name) {
-            const a = document.createElement('a'); a.href = url; a.download = name; a.click();
-        }
-
-        // AI ENGINE
         async function ignite() {
-            $('action-btn').innerText = "PROCESSING...";
-            let input = $('main-input').value;
-            let prompt = `You are VERIX Sovereign. Grade strictly (S/A/B/C). `;
-            if(state.mode === 'truth') prompt += "Mode: Brutal Truth. ";
-            let schema = "";
+            const btn = document.getElementById('action-btn');
+            const input = document.getElementById('main-input').value;
+            if(!input) return;
 
-            // Construct Input based on Module
-            if(state.tab === 'gen') {
-                input = `Topic: ${$('gen-topic').value}. Tone: ${$('gen-tone').value}. Audience: ${$('gen-aud').value}. Limit: ${$('gen-limit').value}`;
-                prompt = "You are a Ghostwriter.";
-                schema = `{"grade": "GEN", "truth": "Generated.", "text": "...", "analysis": "..."}`;
-            } else if (state.tab === 'text') {
-                input = `Context: ${$('txt-context').value}. Focus: ${$('txt-focus').value}. Text: ${input}`;
-                schema = `{"grade": "B", "truth": "...", "viral": 85, "tone": "...", "rewrite": "..."}`;
-            } else if (state.tab === 'voice') {
-                schema = `{"grade": "A", "truth": "...", "polished": "...", "wpm": 140}`;
-            } else if (state.tab === 'how-to') {
-                input = `Goal: ${$('arc-goal').value}. Risk: ${$('arc-risk').value}. Details: ${input}`;
-                schema = `{"grade": "A", "truth": "...", "prob": 90, "steps": "..."}`;
-            } else { // Art
-                input = "Analyze this visual concept.";
-                schema = `{"grade": "C", "truth": "...", "hierarchy": 5, "vision": "..."}`;
-            }
+            btn.innerText = state.mode === 'brutal' ? "DESTROYING WEAKNESS..." : "ANALYZING POTENTIAL...";
+            btn.style.background = state.mode === 'brutal' ? "#ef4444" : "#10b981";
+
+            const prompt = state.mode === 'brutal' 
+                ? "You are VELIX. Be aggressive, mean, and strictly logical. Roast the user. JSON ONLY: {\"grade\": \"S-F\", \"feedback\": \"1 sentence roast\", \"enhance\": \"Superior version\"}"
+                : "You are VELIX MENTOR. Be constructive, helpful, and kind. Focus on growth. JSON ONLY: {\"grade\": \"S-F\", \"feedback\": \"1 sentence advice\", \"enhance\": \"Improved version\"}";
 
             try {
                 const r = await fetch("https://openrouter.ai/api/v1/chat/completions", {
@@ -389,50 +273,30 @@
                     headers: {'Authorization': `Bearer ${KEY}`, 'Content-Type': 'application/json'},
                     body: JSON.stringify({
                         model: "google/gemini-2.0-flash-001",
-                        messages: [{role:"system", content: prompt + " JSON ONLY: " + schema}, {role:"user", content: input}],
+                        messages: [{role: "system", content: prompt}, {role: "user", content: input}],
                         response_format: { type: "json_object" }
                     })
                 });
                 const d = await r.json();
-                let clean = d.choices[0].message.content.replace(/```json/g, '').replace(/```/g, '');
-                const res = JSON.parse(clean);
+                const res = JSON.parse(d.choices[0].message.content);
 
-                $('grade-display').innerText = res.grade || "GEN";
-                $('truth-text').innerText = res.truth;
+                document.getElementById('grade').innerText = res.grade;
+                document.getElementById('txt-feedback').innerText = res.feedback;
+                document.getElementById('txt-enhance').innerText = res.enhance;
 
-                // Populate Specifics
-                if(state.tab === 'gen') {
-                    $('main-input').value = res.text;
-                    $('gen-analysis').innerText = res.analysis;
-                } else if(state.tab === 'text') {
-                    $('txt-viral').innerText = res.viral + "%";
-                    $('viral-bar').style.width = res.viral + "%";
-                    $('txt-tone').innerText = res.tone;
-                    $('txt-rewrite').innerText = res.rewrite;
-                } else if(state.tab === 'voice') {
-                    $('voice-script').innerText = res.polished;
-                    $('voice-wpm').innerText = res.wpm + " WPM";
-                } else if(state.tab === 'how-to') {
-                    $('arc-prob').innerText = res.prob + "%";
-                    $('arc-plan').innerText = res.steps;
-                } else if(state.tab === 'art') {
-                    $('art-score').innerText = res.hierarchy + "/10";
-                    $('art-vision').innerText = res.vision;
-                }
+                const logItem = document.createElement('div');
+                logItem.className = 'hist-item';
+                logItem.innerHTML = `<span>${new Date().toLocaleTimeString()}</span><span class="hist-grade" style="color:${state.mode==='brutal'?'#ef4444':'#10b981'}">${res.grade}</span>`;
+                document.getElementById('history-log').prepend(logItem);
 
-                // Log
-                const h = document.createElement('div');
-                h.innerText = `${state.tab.toUpperCase()}: ${res.grade}`;
-                $('history-log').prepend(h);
-
-            } catch(e) { console.error(e); alert("Error"); }
-            $('action-btn').innerText = state.tab === 'gen' ? "GENERATE TEXT" : "INITIATE AUDIT";
+            } catch(e) { console.error(e); }
+            btn.innerText = "INITIATE ANALYSIS";
+            btn.style.background = "#6366f1";
         }
 
-        function handleImage(e) {
-            const r = new FileReader();
-            r.onload = () => { state.img = r.result.split(',')[1]; $('img-preview').src = r.result; $('img-preview').classList.remove('hidden'); };
-            r.readAsDataURL(e.target.files[0]);
+        function playAudio() {
+            const u = new SpeechSynthesisUtterance(document.getElementById('txt-enhance').innerText);
+            window.speechSynthesis.speak(u);
         }
     </script>
 </body>
